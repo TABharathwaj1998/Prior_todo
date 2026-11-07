@@ -1,0 +1,144 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.subtitle {
+    text-align: center;
+    color: #777;
+    margin-bottom: 25px;
+}
+
+.input-section {
+    display: flex;
+    gap: 10px;
+}
+
+input {
+    flex: 1;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    font-size: 15px;
+    min-width: 0;
+}
+
+input:focus {
+    border-color: #667eea;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 12px 16px;
+}
+
+.add-btn {
+    background: #667eea;
+    color: white;
+    font-weight: bold;
+}
+
+.add-btn:hover {
+    background: #5265d5;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 25px 0;
+}
+
+.filter-btn {
+    background: #eee;
+    color: #333;
+}
+
+.filter-btn.active {
+    background: #667eea;
+    color: white;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f7f7f7;
+    padding: 13px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    gap: 10px;
+}
+
+.task-text {
+    flex: 1;
+    overflow-wrap: anywhere;
+}
+
+li.completed .task-text {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.actions {
+    display: flex;
+    gap: 5px;
+}
+
+.complete-btn {
+    background: #d4edda;
+}
+
+.edit-btn {
+    background: #fff3cd;
+}
+
+.delete-btn {
+    background: #f8d7da;
+}
+
+.empty {
+    text-align: center;
+    color: #999;
+    padding: 20px;
+}
+
+.stats {
+    text-align: center;
+    margin-top: 20px;
+    color: #777;
+    font-size: 14px;
+}

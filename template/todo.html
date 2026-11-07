@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My To-Do List</title>
+    <link rel="stylesheet" href="./CSS/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📝 {{Task}} </h1>
+    <!--<p class="subtitle">Organize your day, one task at a time!</p>-->
+
+    <form class="input-section" method="POST" action="/add_todo">
+        <input type="text" id="taskInput" name="taskinput" placeholder="Enter your task...">
+        <input type="number" id="priorityInput" name="priorityinput" placeholder="Priority (1-5)" min="1" max="5">
+
+        <button class="add-btn" type="submit">+ Add</button>
+    </form>
+
+    <form class="input-section">
+        <ul class="todo-list" id="todoList">
+            {% for todo in TodoList %}
+                <li>
+                    <input type ="checkbox">
+                    <label for ="{{ todo['TODO'] }}">{{ todo['TODO'] }} <t></t>  {{ todo['priority'] }}</label>
+                    <input type = submit value = "Delete" name="{{ todo['TODO'] }}" formmethod="POST" formaction="/delete_todo">
+                </li>
+            {% endfor %}
+        </ul>
+    </form>
+
+    
+
+
+    <div class="filters">
+        <button class="filter-btn active"
+                onclick="filterTasks('all', this)">All</button>
+
+        <button class="filter-btn"
+                onclick="filterTasks('pending', this)">Pending</button>
+
+        <button class="filter-btn"
+                onclick="filterTasks('completed', this)">Completed</button>
+    </div>
+
+
+
+
+</div>
+
+<script src="./CSS/script.js"></script>
+
+</body>
+</html>
