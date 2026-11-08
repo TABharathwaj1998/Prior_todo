@@ -9,7 +9,7 @@ todolist_values = []
 def init():
     conn = sqlite3.connect("priority_todo.db")
     conn.row_factory = sqlite3.Row
-    conn.execute("CREATE TABLE IF NOT EXISTS PriorTODO (id INTEGER PRIMARY KEY AUTOINCREMENT, task TEXT NOT NULL, TODO TEXT NOT NULL, priority INTEGER NOT NULL, date DATETIME)")
+    conn.execute("CREATE TABLE IF NOT EXISTS PriorTODO (task TEXT NOT NULL, TODO TEXT NOT NULL, priority INTEGER NOT NULL, date DATETIME)")
     return conn
 
 @app.route("/", methods=["GET", "POST"])
@@ -31,25 +31,25 @@ def add_todo():
     todolist = cursor.fetchall()
     conn.close()
 
-    return render_template("todo.html", TodoList = todolist)
+    return render_template("todo.html", TodoList = todolist, Task = task)
 
-@app.route("/delete_todo", methods=["POST"])
-def delete_todo():
+@app.route("/completed_todo", methods=["POST"])
+def completed_todo():
     for todolist in range(len(todolist_values)):
         todo_to_delete = request.form.get(todolist_values[todolist])
         todo_to_delete = str(todo_to_delete)
-        if todo_to_delete == "Delete":
-            print("the index to be deleted is: ", todolist)
+        if todo_to_delete == "Completed":
             conn = init()
-            conn.execute("DELETE FROM PriorTODO WHERE id = ?", (todolist+1,))
+            conn.execute("DELETE FROM PriorTODO WHERE TODO = ?", (todolist_values[todolist],))
             conn.commit()
+            print(todolist_values[todolist], " is removed from the list") 
+            todolist_values.pop(todolist)
+            print("so the current list is ", todolist_values)
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM PriorTODO")
             todolist = cursor.fetchall()
             conn.close()
-            return render_template("todo.html", TodoList = todolist)
-    '''
-    '''
-
+            return render_template("todo.html", TodoList = todolist, Task = task)
+    
 if __name__ == "__main__":
     app.run(debug=True)

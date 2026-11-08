@@ -25,9 +25,8 @@
         <ul class="todo-list" id="todoList">
             {% for todo in TodoList %}
                 <li>
-                    <input type ="checkbox">
                     <label for ="{{ todo['TODO'] }}">{{ todo['TODO'] }} <t></t>  {{ todo['priority'] }}</label>
-                    <input type = submit value = "Delete" name="{{ todo['TODO'] }}" formmethod="POST" formaction="/delete_todo">
+                    <input type = submit value = "Completed" name="{{ todo['TODO'] }}" formmethod="POST" formaction="/completed_todo">
                 </li>
             {% endfor %}
         </ul>
