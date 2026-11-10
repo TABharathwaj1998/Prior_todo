@@ -26,32 +26,13 @@
             {% for todo in TodoList %}
                 <li>
                     <label for ="{{ todo['TODO'] }}">{{ todo['TODO'] }} <t></t>  {{ todo['priority'] }}</label>
+                    <input type="submit" value="Update" name="{{ todo['TODO'] }}" formmethod="POST">
                     <input type = submit value = "Completed" name="{{ todo['TODO'] }}" formmethod="POST" formaction="/completed_todo">
                 </li>
             {% endfor %}
         </ul>
     </form>
 
-    
-
-
-    <div class="filters">
-        <button class="filter-btn active"
-                onclick="filterTasks('all', this)">All</button>
-
-        <button class="filter-btn"
-                onclick="filterTasks('pending', this)">Pending</button>
-
-        <button class="filter-btn"
-                onclick="filterTasks('completed', this)">Completed</button>
-    </div>
-
-
-
-
 </div>
-
-<script src="./CSS/script.js"></script>
-
 </body>
 </html>
