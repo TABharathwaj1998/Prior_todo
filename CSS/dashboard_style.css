@@ -1,0 +1,366 @@
+/* Apply predictable sizing and a common font to all page elements. */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Set the overall page background and default text colour. */
+body {
+    background: #f4f6fa;
+    color: #263445;
+}
+
+/* Place the sidebar and main content next to each other. */
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* LEFT SIDEBAR: Fixed-width navigation area. */
+.sidebar {
+    width: 230px;
+    flex-shrink: 0;
+    background: #172b4d;
+    color: white;
+    padding: 25px 15px;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+.sidebar h4 {
+    color: #9baac0;
+    margin: 20px 10px 10px;
+    font-size: 12px;
+}
+
+.sidebar a {
+    display: block;
+    color: #dce5f1;
+    text-decoration: none;
+    padding: 13px;
+    border-radius: 7px;
+    margin-bottom: 5px;
+}
+
+/* Highlight the current page and give links a hover effect. */
+.sidebar a.active,
+.sidebar a:hover {
+    background: #315b91;
+}
+
+/* MAIN CONTENT: Take up the remaining available width. */
+.main {
+    flex: 1;
+    min-width: 0;
+    padding: 30px;
+}
+
+.header,
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.header {
+    margin-bottom: 28px;
+}
+
+.header h1 {
+    font-size: 27px;
+}
+
+.page-description,
+.muted {
+    color: #7d8795;
+    margin-top: 6px;
+    font-size: 14px;
+}
+
+.profile {
+    background: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+}
+
+/* SUMMARY CARDS: Four equal columns on larger screens. */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #00000008;
+}
+
+.card p {
+    color: #7d8795;
+    margin-bottom: 12px;
+}
+
+.card h2 {
+    font-size: 29px;
+}
+
+.blue { color: #3273c5; }
+.orange { color: #d58c26; }
+.purple { color: #7955bd; }
+.green { color: #2ca66d; }
+
+/* TASK PANEL: White container around the filters and task table. */
+.task-panel {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #00000008;
+}
+
+.panel-header {
+    margin-bottom: 20px;
+}
+
+.add-btn,
+.save-btn {
+    background: #2875c7;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.add-btn:hover,
+.save-btn:hover {
+    background: #1e5fa5;
+}
+
+/* Keep search and dropdown filters in one flexible row. */
+.controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.controls input,
+.controls select {
+    padding: 11px;
+    border: 1px solid #d9dee7;
+    border-radius: 6px;
+    background: white;
+}
+
+.controls input {
+    min-width: 220px;
+    flex: 1;
+}
+
+.controls select {
+    min-width: 150px;
+}
+
+/* Allow horizontal scrolling for the table on small screens. */
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 850px;
+}
+
+th,
+td {
+    padding: 14px 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+}
+
+th {
+    background: #f8f9fb;
+    color: #687586;
+}
+
+/* Status badges show the current state of each task. */
+.badge {
+    display: inline-block;
+    padding: 6px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+}
+
+.pending {
+    background: #fff0d8;
+    color: #bd7c13;
+}
+
+.progress {
+    background: #e2efff;
+    color: #2875c7;
+}
+
+.completed {
+    background: #dff5e8;
+    color: #258b57;
+}
+
+/* Priority text uses different colours for quick scanning. */
+.priority-high { color: #d94b4b; font-weight: bold; }
+.priority-medium { color: #d58c26; font-weight: bold; }
+.priority-low { color: #279b68; font-weight: bold; }
+
+/* Small buttons in the task table. */
+.action-btn,
+.timer-btn {
+    border: none;
+    padding: 7px 9px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 2px;
+}
+
+.edit { background: #fff0cf; }
+.delete { background: #ffe1e1; }
+
+.timer-btn {
+    background: #e4efff;
+    color: #2875c7;
+}
+
+/* POPUP: Covers the screen with a dark transparent background. */
+.modal {
+    display: none; /* JavaScript changes this to flex when opening the form. */
+    position: fixed;
+    inset: 0;
+    background: #0008;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.modal-content {
+    background: white;
+    width: 450px;
+    max-width: 100%;
+    padding: 25px;
+    border-radius: 12px;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+}
+
+.modal-content label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.modal-content input,
+.modal-content select {
+    width: 100%;
+    padding: 11px;
+    margin: 8px 0 15px;
+    border: 1px solid #d9dee7;
+    border-radius: 6px;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background: #e5e7eb;
+    color: #263445;
+}
+
+/* TABLET: Use two summary cards per row. */
+@media (max-width: 1000px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .main {
+        padding: 18px;
+    }
+}
+
+/* MOBILE: Make the sidebar narrower and adjust headings. */
+@media (max-width: 600px) {
+    .sidebar {
+        width: 65px;
+        padding: 15px 5px;
+    }
+
+    .sidebar .logo {
+        font-size: 11px;
+        writing-mode: vertical-rl;
+        margin: 15px auto 35px;
+    }
+
+    .sidebar h4 {
+        display: none;
+    }
+
+    .sidebar a {
+        font-size: 0;
+        text-align: center;
+        padding: 13px 5px;
+    }
+
+    .sidebar a::first-letter {
+        font-size: 18px;
+    }
+
+    .main {
+        padding: 13px;
+    }
+
+    .cards {
+        gap: 10px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .header h1 {
+        font-size: 20px;
+    }
+
+    .panel-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .controls input,
+    .controls select {
+        width: 100%;
+    }
+}

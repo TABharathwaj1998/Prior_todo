@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Set the character encoding so text and symbols display correctly. -->
+    <meta charset="UTF-8">
+
+    <!-- Make the layout adapt to phones, tablets, and desktop screens. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Text shown in the browser tab. -->
+    <title>Task Management Dashboard</title>
+
+    <!-- Load the separate CSS file for the page design. -->
+    <link rel="stylesheet" href="./CSS/dashboard_style.css">
+</head>
+<body>
+
+    <!-- The layout contains the left navigation and the main work area. -->
+    <div class="layout">
+
+        <!-- MAIN AREA: Dashboard cards, search, filters, and task table. -->
+        <main class="main">
+
+            <!-- Page heading and sample signed-in user display. -->
+            <header class="header">
+                <div>
+                    <h1>Task Management</h1>
+                    <p class="page-description">Plan, assign, and track your work.</p>
+                </div>
+                <div class="profile">👤 Admin</div>
+            </header>
+
+            <!-- SUMMARY CARDS: JavaScript updates each number. -->
+            <section class="cards" aria-label="Task summary">
+                <div class="card">
+                    <p>Total Tasks</p>
+                    <h2 class="blue" id="total">0</h2>
+                </div>
+
+                <div class="card">
+                    <p>Pending</p>
+                    <h2 class="orange" id="pending">0</h2>
+                </div>
+
+                <div class="card">
+                    <p>In Progress</p>
+                    <h2 class="purple" id="progress">0</h2>
+                </div>
+
+                <div class="card">
+                    <p>Completed</p>
+                    <h2 class="green" id="completed">0</h2>
+                </div>
+            </section>
+
+            <!-- TASK LIST: Search and filter controls sit above the table. -->
+            <section class="task-panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>My Tasks</h2>
+                        <p class="muted">View and manage your task list.</p>
+                    </div>
+
+                    <!-- Calls openModal() in script.js to show the task form. -->
+                    <button class="add-btn" type="button" name = "addTask" onclick="openModal()">
+                        + Add New Task
+                    </button>
+                </div>
+
+                <div class="controls">
+                    <!-- Search checks task name, project, and assigned employee. -->
+                    <input
+                        type="search"
+                        id="search"
+                        placeholder="Search tasks..."
+                        aria-label="Search tasks"
+                        oninput="showTasks()"
+                    >
+
+                    <!-- Filter the table by task status. -->
+                    <select id="filter" aria-label="Filter by status" onchange="showTasks()">
+                        <option value="All">All Statuses</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+
+                    <!-- Filter the table by task priority. -->
+                    <select id="priorityFilter" aria-label="Filter by priority" onchange="showTasks()">
+                        <option value="All">All Priorities</option>
+                        <option value="High">High Priority</option>
+                        <option value="Medium">Medium Priority</option>
+                        <option value="Low">Low Priority</option>
+                    </select>
+                </div>
+
+                <!-- JavaScript creates one table row for each visible task. -->
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Task ID</th>
+                                <th>Task Name</th>
+                                <th>Project</th>
+                                <th>Assigned To</th>
+                                <th>Due Date</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                            <!--    <th>Time Tracked</th>
+                                <th>Actions</th>-->
+                            </tr>
+                        </thead>
+                        <tbody id="taskTable">
+                            {% for task in tasklist %}
+                                <tr>
+                                    <td>{{ task['taskID'] }}</td>
+                                    <td>{{ task['taskName'] }}</td>
+                                    <td>{{ task['project'] }}</td>
+                                    <td>{{ task['assignedTo'] }}</td>
+                                    <td>{{ task['dueDate'] }}</td>
+                                    <td>{{ task['priority'] }}</td>
+                                    <td>{{ task['status'] }}</td>
+                                    <td>
+                                        <a href="http://127.0.0.1:5001/?task={{ task['taskName']|urlencode }}&assigned={{ task['assignedTo']|urlencode }}&status={{ task['status']|urlencode }}&priority={{ task['priority']|urlencode }}&due={{ task['dueDate']|urlencode }}">
+                                            Open
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <form method = "POST" action="/delete_tasks">
+                                            <input type = submit value = "DELETE" name="{{ task['taskID'] }}">
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ADD / EDIT POPUP: Hidden until the user clicks Add or Edit. -->
+    
+    <div class="modal" id="taskModal" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle" id="taskForm">
+            <form method="POST" action="/add_tasks">    
+                <h2 id="modalTitle">Create New Task</h2>
+
+                <!-- Each input has an ID so JavaScript can read its value. -->
+                <label for="taskID">Task ID</label>
+                <input type="number" id="taskID" name = "taskID" placeholder="Enter task ID">
+                
+                <label for="taskName">Task Name</label>
+                <input type="text" id="taskName" name = "taskName" placeholder="Example: Prepare project report">
+
+                <label for="project">Project Name</label>
+                <input type="text" id="project" name = "project" placeholder="Enter project name">
+
+                <label for="employee">Assigned To</label>
+                <input type="text" id="employee" name = "employee" placeholder="Enter employee name">
+
+                <label for="startDate">Start Date</label>
+                <input type="date" id="startDate" name = "startDate">
+
+                <label for="dueDate">Due Date</label>
+                <input type="date" id="dueDate" name = "dueDate">
+
+                <!-- The selected priority is stored with the task. -->
+                <label for="priority">Priority</label>
+                <select id="priority" name = "priority">
+                    <option value="High">High</option>
+                    <option value="Medium" selected>Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+
+                <!-- The selected status is stored with the task. -->
+                <label for="status">Status</label>
+                <select id="status" name = "status">
+                    <option value="Pending">Pending</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                </select>
+
+                <!-- Save calls saveTask(); Cancel closes the popup without saving. -->
+                <div class="modal-buttons">
+                    <button class="save-btn" type="submit">Save Task</button>
+                    <button class="cancel-btn" type="button">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </form>
+    
+
+    <!-- Load JavaScript after the HTML elements so it can find them.-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./CSS/dashboard_script.js"></script> 
+</body>
+</html>

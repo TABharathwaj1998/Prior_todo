@@ -4,35 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My To-Do List</title>
-    <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="stylesheet" href="./CSS/todo.css">
 </head>
 
 <body>
 
 <div class="container">
 
-    <h1>📝 {{Task}} </h1>
-    <!--<p class="subtitle">Organize your day, one task at a time!</p>-->
+    <h1>📝 {{Task}} </h1> <br>
+    <h2>By {{details['assigned']}} &nbsp {{details['status']}} &nbsp {{details['priority']}} &nbsp {{details['due']}}</h2>
+    <!--&nbsp stands for non-breaking space in html-->
 
     <form class="input-section" method="POST" action="/add_todo">
         <input type="text" id="taskInput" name="taskinput" placeholder="Enter your task...">
         <input type="number" id="priorityInput" name="priorityinput" placeholder="Priority (1-5)" min="1" max="5">
-
+        <input type="date" id = "dueDate" name = "dueDate" placeholder= "Enter date within the task deadline "max="{{details['due']}}">
         <button class="add-btn" type="submit">+ Add</button>
     </form>
 
-    <form class="input-section">
+    <div class="input-section">
         <ul class="todo-list" id="todoList">
             {% for todo in TodoList %}
                 <li>
-                    <label for ="{{ todo['TODO'] }}">{{ todo['TODO'] }} <t></t>  {{ todo['priority'] }}</label>
-                    <input type="submit" value="Update" name="{{ todo['TODO'] }}" formmethod="POST">
-                    <input type = submit value = "Completed" name="{{ todo['TODO'] }}" formmethod="POST" formaction="/completed_todo">
+                    <label for ="{{ todo['TODO'] }}">{{ todo['TODO'] }} &nbsp {{ todo['priority'] }} &nbsp {{todo['due_date']}}</label>
+                    <button popovertarget="edit-{{ todo['TODO'] }}" class="edit-btn">Edit</button>
+                    <form method = "POST" action = "/completed_todo">
+                        <input type = submit value = "Completed" name="{{ todo['TODO'] }}">
+                    </form>
                 </li>
+                <div id="edit-{{ todo['TODO'] }}" popover>
+                    <form method = "POST" action = "/update_todo">
+                        <label for="editInput">Edit Task: {{ todo['TODO'] }}</label>
+                        <input type="text" id="editInput" name="{{todo['TODO']}}" placeholder="Edit task...">
+                        <input type="number" id="editPriority" name="{{todo['priority']}}" placeholder="Edit Priority (1-5)" min="1" max="5">
+                        <input type="date" id = "editdueDate" name = "{{todo['due_date']}}" placeholder= "Enter date within the task deadline "max="{{details['due']}}">
+                        <input type="submit" class="update-btn" name="Edit" value="{{ todo['TODO'] }} {{ todo['priority'] }} {{todo['due_date']}}">
+                    </form>
+                </div>
             {% endfor %}
         </ul>
-    </form>
-
+    </div>
 </div>
 </body>
 </html>
