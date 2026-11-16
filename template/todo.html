@@ -38,7 +38,7 @@
                         <input type="text" id="editInput" name="{{todo['TODO']}}" placeholder="Edit task...">
                         <input type="number" id="editPriority" name="{{todo['priority']}}" placeholder="Edit Priority (1-5)" min="1" max="5">
                         <input type="date" id = "editdueDate" name = "{{todo['due_date']}}" placeholder= "Enter date within the task deadline "max="{{details['due']}}">
-                        <input type="submit" class="update-btn" name="Edit" value="{{ todo['TODO'] }} {{ todo['priority'] }} {{todo['due_date']}}">
+                        <input type="submit" class="update-btn" name="Edit" value="{{ todo['TODO'] }} PRIORITY {{ todo['priority'] }} DUEDATE {{todo['due_date']}}">
                     </form>
                 </div>
             {% endfor %}
