@@ -24,9 +24,7 @@ def add_tasks():
         task_start_date = request.form.get("startDate")
         task_due_date = request.form.get("dueDate")
         task_status = request.form.get("status")
-
-        print("Task Name: ", task_name, "Priority: ", task_priority, "Project: ", task_project, "Assigned To: ", task_assigned_to, "Start Date: ", task_start_date, "Due Date: ", task_due_date, "Status: ", task_status)
-
+        
         CRUD.insert_task(database, task_id, task_name, task_priority, task_project, task_assigned_to, task_start_date, task_due_date, task_status)
 
     tasklist = CRUD.get_tasklist(database)

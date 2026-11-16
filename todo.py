@@ -49,20 +49,18 @@ def update_todo():
     global todolist, task, details, dueDate
     for todolist in range(len(todolist_values)):
         prior_todo = request.form.get("Edit")
-        old_todo = str(prior_todo.split(" ")[0].strip())
+        old_todo = str(prior_todo.split("PRIORITY")[0].strip())
         todo_from_list = str(todolist_values[todolist].strip())
-        old_priority = int(prior_todo.split(" ")[1].strip())
+        old_priority = prior_todo.split("PRIORITY")[1].strip()
+        old_priority = int(old_priority.split("DUEDATE")[0].strip())
         priority_from_list = int(priority_values[todolist].strip())
-        old_due_date = str(prior_todo.split(" ")[2].strip())
+        old_due_date = str(prior_todo.split("DUEDATE")[1].strip())
         due_date_from_list = str(due_date_values[todolist].strip())
         updated_todo = request.form.get(todolist_values[todolist])
         updated_priority = request.form.get(priority_values[todolist])
         updated_due_date = str(request.form.get(due_date_values[todolist]))
 
         if old_todo == todo_from_list or old_priority == priority_from_list or old_due_date == due_date_from_list:
-            print("old_todo is ", old_todo, ", old_priority is ", old_priority, "and old due date is ", old_due_date)
-            print("updated_todo is ", updated_todo, ", updated_priority is ", updated_priority, "and updated due date is ", updated_due_date)
-            print("task")
             CRUD.update_todo(database, task, old_todo, old_priority, old_due_date, updated_todo, updated_priority, updated_due_date)
             todolist_values[todolist] = updated_todo
             priority_values[todolist] = updated_priority
@@ -80,9 +78,7 @@ def completed_todo():
         todo_to_delete = str(todo_to_delete)
         if todo_to_delete == "Completed":
             CRUD.delete_todo(database, todolist_values[todolist], task)
-            print(todolist_values[todolist], " is removed from the list") 
             todolist_values.pop(todolist)
-            print("so the current list is ", todolist_values)
             todolist = CRUD.get_todolist(database, task)
             break
     return render_template("todo.html", TodoList = todolist, Task = task,  details = details)
